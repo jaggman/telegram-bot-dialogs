@@ -106,6 +106,10 @@ class Dialog
         if ($autoimport) {
             $this->importSteps();
         }
+
+        if(function_exists('config')) {
+            $this->aliases = config('dialogs.aliases');
+        }
     }
 
 
