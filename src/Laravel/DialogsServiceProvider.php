@@ -11,6 +11,7 @@ namespace BotDialogs\Laravel;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use BotDialogs\Dialogs;
+use Predis\Client as Redis;
 
 /**
  * Class DialogsServiceProvider
@@ -26,11 +27,6 @@ class DialogsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Dialogs::class, function ($app) {
-            /** @var Container $app */
-            return new Dialogs($app->make('telegram'), $app->make('redis'));
-        });
-
         $this->mergeConfigFrom(__DIR__.'/config/dialogs.php', 'dialogs');
 
         $this->app->alias(Dialogs::class, 'dialogs');
