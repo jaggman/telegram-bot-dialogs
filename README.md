@@ -6,7 +6,11 @@ This libriary allows to make simple dialogs for your Telegram bots that based on
 ## Installation
 You can easy install the package using Composer:
 
-`composer require zarincheg/telegram-bot-dialogs dev-master`
+    composer require zarincheg/telegram-bot-dialogs dev-master
+
+You can publish the config-file with:
+
+    php artisan vendor:publish --provider="BotDialogs\Laravel\DialogsServiceProvider" --tag="config"
 
 After that you need to register the service provide for using with Laravel DI container
 Open config/app.php and, to your providers array at the bottom, add:
