@@ -179,7 +179,8 @@ class Dialog
     {
         $message = $this->update->getMessage()->getText();
         $message = mb_strtolower(trim($message));
-        $message = preg_replace('![%#,:&*@_\'\"\\\+\^\(\)\[\]\-\$\!\?\.]+!ui', '', $message);
+        $message = preg_replace('/[^a-zA-Z0-9\süöäÜÖÄ?!]/', '', $message);
+        $message = trim($message);
 
         if (in_array($message, $this->aliases['yes'])) {
             $this->yes = true;
