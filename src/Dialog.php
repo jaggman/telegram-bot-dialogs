@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by Kirill Zorin <zarincheg@gmail.com>
- * Personal website: http://libdev.ru
- *
- * Date: 12.06.2016
- * Time: 16:47
- */
 
 namespace BotDialogs;
 
