@@ -6,7 +6,7 @@ This libriary allows to make simple dialogs for your Telegram bots that based on
 ## Installation
 You can easy install the package using Composer:
 
-    composer require zarincheg/telegram-bot-dialogs dev-master
+    composer require okaufmann/telegram-bot-dialogs
 
 You can publish the config-file with:
 

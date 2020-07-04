@@ -2,40 +2,20 @@
 
 namespace BotDialogs;
 
-use Predis\Client as Redis;
+use Illuminate\Support\Facades\Redis;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-/**
- * Class Dialogs
- * @package BotDialogs
- */
 class Dialogs
 {
-    /**
-     * @var Api
-     */
-    protected $telegram;
+    protected Api $telegram;
 
-    /**
-     * @var Redis
-     */
-    protected $redis;
-
-    /**
-     * @param Api $telegram
-     * @param Redis $redis
-     */
-    public function __construct(Api $telegram, Redis $redis)
+    public function __construct(Api $telegram)
     {
         $this->telegram = $telegram;
-        $this->redis = $redis;
     }
-    /**
-     * @param Dialog $dialog
-     * @return Dialog
-     */
-    public function add(Dialog $dialog)
+
+    public function add(Dialog $dialog): Dialog
     {
         $dialog->setTelegram($this->telegram);
 
@@ -43,31 +23,24 @@ class Dialogs
         $chatId = $dialog->getChat()->getId();
         $this->setField($chatId, 'next', $dialog->getNext());
         $this->setField($chatId, 'dialog', get_class($dialog));
-        // @todo It's not safe. Need to define Dialogs registry with check of bindings
 
         return $dialog;
     }
 
-    /**
-     * @param Update $update
-     * @return Dialog|false
-     * @internal param $chatId
-     */
-    public function get(Update $update)
+    public function get(Update $update): ?Dialog
     {
         $chatId = $update->getMessage()->getChat()->getId();
-        $redis = $this->redis;
 
-        if (!$redis->exists($chatId)) {
-            return false;
+        if (! $this->redis()->exists($chatId)) {
+            return null;
         }
 
-        $next = $redis->hget($chatId, 'next');
-        $name = $redis->hget($chatId, 'dialog');
-        $memory = $redis->hget($chatId, 'memory');
+        $next = $this->redis()->hget($chatId, 'next');
+        $name = $this->redis()->hget($chatId, 'dialog');
+        $memory = $this->redis()->hget($chatId, 'memory');
 
         /** @var Dialog $dialog */
-        $dialog = new $name($update); // @todo look at the todo above about code safety
+        $dialog = new $name($update);
         $dialog->setTelegram($this->telegram);
         $dialog->setNext($next);
         $dialog->setMemory($memory);
@@ -75,55 +48,49 @@ class Dialogs
         return $dialog;
     }
 
-    /**
-     * @param Update $update
-     */
     public function proceed(Update $update)
     {
-        $dialog = self::get($update);
+        $dialog = $this->get($update);
 
-        if (!$dialog) {
+        if (! $dialog) {
             return;
         }
+
         $chatId = $dialog->getChat()->getId();
         $dialog->proceed();
 
         if ($dialog->isEnd()) {
-            $this->redis->del($chatId);
+            $this->redis()->del($chatId);
         } else {
             $this->setField($chatId, 'next', $dialog->getNext());
             $this->setField($chatId, 'memory', $dialog->getMemory());
         }
     }
 
-    /**
-     * @param Update $update
-     * @return bool
-     */
-    public function exists(Update $update)
+    public function exists(Update $update): bool
     {
-        if (!$this->redis->exists($update->getMessage()->getChat()->getId())) {
+        if (! $this->redis()->exists($update->getMessage()->getChat()->getId())) {
             return false;
         }
 
         return true;
     }
 
-    /**
-     * @param string $key
-     * @param string $field
-     * @param mixed $value
-     */
-    protected function setField($key, $field, $value)
+    protected function setField(string $key, string $field, $value)
     {
-        $redis = $this->redis;
+        $this->redis()->multi();
+        $this->redis()->hset($key, $field, $value);
+        $this->redis()->expire($key, config('dialogs.expires'));
+        $this->redis()->exec();
+    }
 
-        $redis->multi();
-
-        $redis->hset($key, $field, $value);
-        // @todo Move to config/settings
-        $redis->expire($key, 300);
-
-        $redis->exec();
+    /**
+     * Get the Redis connection instance.
+     *
+     * @return \Illuminate\Redis\Connections\Connection
+     */
+    protected function redis()
+    {
+        return Redis::connection(config('dialogs.redis.connection'));
     }
 }

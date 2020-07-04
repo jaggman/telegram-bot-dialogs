@@ -4,10 +4,6 @@ namespace BotDialogs\Dialogs;
 
 use BotDialogs\Dialog;
 
-/**
- * Class HelloDialog
- * @package GreenzoBot\Telegram\Dialogs
- */
 class HelloDialog extends Dialog
 {
     protected $steps = ['hello', 'fine', 'bye'];
@@ -16,7 +12,7 @@ class HelloDialog extends Dialog
     {
         $this->telegram->sendMessage([
             'chat_id' => $this->getChat()->getId(),
-            'text' => 'Hello! How are you?'
+            'text' => 'Hello! How are you?',
         ]);
     }
 
@@ -24,7 +20,7 @@ class HelloDialog extends Dialog
     {
         $this->telegram->sendMessage([
             'chat_id' => $this->getChat()->getId(),
-            'text' => 'Bye!'
+            'text' => 'Bye!',
         ]);
         $this->jump('hello');
     }
@@ -33,7 +29,7 @@ class HelloDialog extends Dialog
     {
         $this->telegram->sendMessage([
             'chat_id' => $this->getChat()->getId(),
-            'text' => 'I\'m OK :)'
+            'text' => 'I\'m OK :)',
         ]);
     }
 }

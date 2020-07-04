@@ -1,13 +1,9 @@
 <?php
 
-namespace BotDialogs\Laravel\Facades;
+namespace BotDialogs\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * Class Dialogs
- * @package BotDialogs\Laravel\Facades
- */
 class Dialogs extends Facade
 {
     /**

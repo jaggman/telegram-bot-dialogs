@@ -1,14 +1,16 @@
 {
-  "name": "zarincheg/telegram-bot-dialogs",
+  "name": "okaufmann/telegram-bot-dialogs",
   "description": "Telegram Bot API PHP SDK extension that allows to implement dialogs in bots",
   "type": "library",
-  "homepage": "https://github.com/zarincheg/telegram-bot-dialogs",
   "license": "MIT",
-  "version": "0.3.0",
   "authors": [
     {
       "name": "Kirill Zorin",
       "email": "zarincheg@gmail.com"
+    },
+    {
+      "name": "Oliver Kaufmann",
+      "email": "okaufmann91@gmail.com"
     }
   ],
   "autoload": {
@@ -17,11 +19,15 @@
     }
   },
   "require": {
-    "php": "^7.2",
-    "illuminate/support": "^6.0",
+    "php": "^7.4",
+    "ext-redis": "*",
+    "illuminate/contracts": "^7.0",
+    "illuminate/support": "^7.0",
     "irazasyed/telegram-bot-sdk": "^3.0",
-    "predis/predis": "^1.1",
     "symfony/yaml": "3.*"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.32"
   },
   "extra": {
     "laravel": {
@@ -31,7 +37,8 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "preferred-install": "dist"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
