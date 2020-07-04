@@ -1,4 +1,4 @@
-# Dialogs for [Telegram Bot SDK](https://github.com/irazasyed/telegram-bot-sdk)
+# Dialogs for Telegram Bot SDK
 
 <a href="https://github.com/okaufmann/telegram-bot-dialogs/releases"><img src="https://img.shields.io/github/release/okaufmann/telegram-bot-dialogs.svg?style=for-the-badge" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/okaufmann/telegram-bot-dialogs"><img src="https://img.shields.io/packagist/dt/okaufmann/telegram-bot-dialogs.svg?style=for-the-badge" alt="Total Downloads"/></a>
@@ -6,7 +6,7 @@
 
 The extension for Telegram Bot API PHP SDK that allows to implement dialogs in bots
 
-This library allows to make simple dialogs for your Telegram bots that based on the Telegram Bot API - PHP SDK (https://github.com/irazasyed/telegram-bot-sdk).
+This library allows to make simple dialogs for your Telegram bots that based on the[Telegram Bot SDK](https://github.com/irazasyed/telegram-bot-sdk).
 
 ## Installation
 You can easy install the package using Composer:
