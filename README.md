@@ -55,7 +55,7 @@ class HelloDialog extends Dialog
 }
 ```
 
-For initiate new dialog you have to use Dialogs class instance to add new dialog implementation. And for execute the first and next steps you have to call Dialogs::procceed() mehod with update object as an argument. Also it is possible to use dialogs with Telegram commands and DI through type hinting.
+For initiate new dialog you have to use Dialogs class instance to add new dialog implementation. And for execute the first and next steps you have to call Dialogs::proceed() method with update object as an argument. Also it is possible to use dialogs with Telegram commands and DI through type hinting.
 
 ```php
 use Telegram\Bot\Commands\Command;
@@ -211,7 +211,7 @@ You can inherit AuthorizedDialog class and put Telegram usernames into \$allowed
 - `add(Dialog $dialog)` - Add the new dialog
 - `get(Telegram\Bot\Objects\Update $update)` - Returns the dialog object for the existing dialog
 - `proceed(Telegram\Bot\Objects\Update $update)` - Run the next step handler for the existing dialog
-- `exists(Telegram\Bot\Objects\Update $update)` - Check for existsing dialog
+- `exists(Telegram\Bot\Objects\Update $update)` - Check for existing dialog
 
 ## Steps configuration in separate files
 
@@ -223,10 +223,4 @@ You can define dialog configuration in separate yaml or php files. To do this, s
 ],
 ```
 
-Configuration from files in production environment stored in default cache instanse. Because of this, you shall add `php artisan cache:clear` to your deployment script.
-
-## What is planned to improve:
-
-- Refactor for using names in Dialogs::add() instead of objects and rename to start()
-- Add LUIS API support (https://www.luis.ai/)
-- Long-term memory
+Configuration from files in production environment stored in default cache instance. Because of this, you shall add `php artisan cache:clear` to your deployment script.
