@@ -3,12 +3,12 @@
 <a href="https://github.com/okaufmann/telegram-bot-dialogs/releases"><img src="https://img.shields.io/github/release/okaufmann/telegram-bot-dialogs.svg?style=for-the-badge" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/okaufmann/telegram-bot-dialogs"><img src="https://img.shields.io/packagist/dt/okaufmann/telegram-bot-dialogs.svg?style=for-the-badge" alt="Total Downloads"/></a>
 
-
 The extension for Telegram Bot API PHP SDK that allows to implement dialogs in bots
 
 This library allows to make simple dialogs for your Telegram bots that based on the [Telegram Bot SDK](https://github.com/irazasyed/telegram-bot-sdk).
 
 ## Installation
+
 You can easy install the package using Composer:
 
     composer require okaufmann/telegram-bot-dialogs
@@ -17,22 +17,11 @@ You can publish the config-file with:
 
     php artisan vendor:publish --provider="BotDialogs\DialogsServiceProvider" --tag="config"
 
-After that you need to register the service provide for using with Laravel DI container
-Open config/app.php and, to your providers array at the bottom, add:
-
-```php
-Telegram\Bot\TelegramServiceProvider::class
-```
-
 Each dialog should be implemented as class that extends basic Dialog as you can see in example bellow:
 
 ```php
-<?php
 use BotDialogs\Dialog;
 
-/**
- * Class HelloDialog
- */
 class HelloDialog extends Dialog
 {
     // Array with methods that contains logic of dialog steps.
@@ -75,15 +64,10 @@ use App\Dialogs\HelloDialog;
 
 class HelloCommand extends Command
 {
-    /**
-     * @var string Command name
-     */
     protected $name = 'hello';
+
     protected $description = 'Just say "Hello" and ask few questions';
 
-    /**
-     * @param Dialogs $dialogs
-     */
     public function __construct(Dialogs $dialogs)
     {
         $this->dialogs = $dialogs;
@@ -95,7 +79,9 @@ class HelloCommand extends Command
     }
 }
 ```
+
 And code in the webhook controller
+
 ```php
 use Telegram\Bot\Api;
 use BotDialogs\Dialogs;
@@ -119,9 +105,11 @@ if (!$this->dialogs->exists($update)) {
   $this->dialogs->proceed($update);
 }
 ```
+
 For storing dialog information(also for the data that pushed by the Dialog::remember() method) using Redis.
 
 ## Advanced definition of the dialog steps
+
 You can define default text answers for your dialog steps. For this you have to define the step as an array with name and response fields.
 
 ```php
@@ -139,11 +127,13 @@ class HelloDialog extends Dialog
     // ...
 }
 ```
+
 In this case, if you don't need any logic inside the step handler - you can don't define it. Just put the response inside the step definition. It works good for welcome messages, messages with tips/advices and so on. If you want format response with markdown, just set `markdown` field to `true`.
 
-Also, you can control dialog direction in step by defining `jump ` and `end` fields. `jump` acts as `jump()` method - dialog jumps to particular step. `end` field, is set to `true`, ends dialog after current step.
+Also, you can control dialog direction in step by defining `jump` and `end` fields. `jump` acts as `jump()` method - dialog jumps to particular step. `end` field, is set to `true`, ends dialog after current step.
 
 Also, you can use `is_dich` (is it a dichotomous question) option of the step. If this option set to true, you can use `yes` and `no` fields of the Dialog instance to check user answer. For example:
+
 ```php
 class HelloDialog extends Dialog
 {
@@ -169,6 +159,7 @@ class HelloDialog extends Dialog
     }
 }
 ```
+
 In the `config/dialogs.php` you can modify aliases for yes/no meanings.
 
 Often in dichotomous question you only need to send response and jump to another step. In this case, you can define steps with responses and set their names as values of 'yes', 'no' or 'default' keys of dichotomous step. For example:
@@ -202,9 +193,9 @@ class HelloDialog extends Dialog
 }
 ```
 
-
 ## Access control with in dialogs
-You can inherit AuthorizedDialog class and put Telegram usernames into $allowedUsers property. After that just for users in the list will be allowed to start the dialog.
+
+You can inherit AuthorizedDialog class and put Telegram usernames into \$allowedUsers property. After that just for users in the list will be allowed to start the dialog.
 
 ## Available methods of the _Dialog_ class
 
@@ -216,6 +207,7 @@ You can inherit AuthorizedDialog class and put Telegram usernames into $allowedU
 - `isEnd()` - Check the end of the dialog
 
 ## Available methods of the _Dialogs_ class
+
 - `add(Dialog $dialog)` - Add the new dialog
 - `get(Telegram\Bot\Objects\Update $update)` - Returns the dialog object for the existing dialog
 - `proceed(Telegram\Bot\Objects\Update $update)` - Run the next step handler for the existing dialog
@@ -234,6 +226,7 @@ You can define dialog configuration in separate yaml or php files. To do this, s
 Configuration from files in production environment stored in default cache instanse. Because of this, you shall add `php artisan cache:clear` to your deployment script.
 
 ## What is planned to improve:
+
 - Refactor for using names in Dialogs::add() instead of objects and rename to start()
 - Add LUIS API support (https://www.luis.ai/)
 - Long-term memory
