@@ -21,8 +21,8 @@
   "require": {
     "php": "^7.4",
     "ext-redis": "*",
-    "illuminate/contracts": "^7.0",
-    "illuminate/support": "^7.0",
+    "illuminate/contracts": "^6.0|^7.0",
+    "illuminate/support": "^6.0|^7.0",
     "irazasyed/telegram-bot-sdk": "^3.0",
     "symfony/yaml": "5.*"
   },
