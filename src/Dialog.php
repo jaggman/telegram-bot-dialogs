@@ -231,7 +231,7 @@ class Dialog
         if (isset($step['response'])) {
             $params = [
                 'chat_id' => $this->getChat()->getId(),
-                'text'    => $step['response'],
+                'text' => $step['response'],
             ];
 
             if (isset($step['markdown']) && $step['markdown']) {
