@@ -1,5 +1,5 @@
 {
-  "name": "okaufmann/telegram-bot-dialogs",
+  "name": "jaggman/telegram-bot-dialogs",
   "description": "Telegram Bot API PHP SDK extension that allows to implement dialogs in bots",
   "type": "library",
   "license": "MIT",
@@ -19,10 +19,10 @@
     }
   },
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8.0",
     "ext-redis": "*",
-    "illuminate/contracts": "^6.0|^7.0",
-    "illuminate/support": "^6.0|^7.0",
+    "illuminate/contracts": "^6.0|^7.0|^8.0",
+    "illuminate/support": "^6.0|^7.0|^8.0",
     "irazasyed/telegram-bot-sdk": "^3.0",
     "symfony/yaml": "5.*"
   },
